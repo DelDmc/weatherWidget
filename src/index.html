@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Widget</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <style>
+        .ui.card > .content p.temperature-info {
+            display: inline-flex;
+            margin-right: 15px;
+          }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+	<div class="ui inverted menu">
+		<div class="ui container">
+			<a class="header item" href="#">
+				<img class="logo" src="logo.png" style="padding: 5px;">
+				Weather App
+			</a>
+			<div class="ui search item">
+				<div class="ui icon input">
+					<input class="prompt" id="locationInput" type="text" placeholder="Search city...">
+					<i class="search icon"></i>
+				</div>
+			</div>
+			<div class="right menu">
+				<a class="item" href="#">Docs</a>
+				<a class="item" href="#">Contact us</a>
+			</div>
+		</div>
+	</div>
+
+    <!-- Current weather -->
+	<div class="ui container" style="padding-bottom: 20px">
+        <div style="display: flex; align-items: center">
+            <h2 id="currentTitle" style="margin-right: 15px">Current weather</h2>
+            <img id="currentIcon" style="margin-bottom: 10px; display:none">
+        </div>
+		<div class="ui stackable grid">
+			<div class="four wide column">
+				<div class="ui card">
+					<div class="content">
+						<div class="header">Temperature</div>
+						<div class="description">
+							<p id="currentTempC">Current: 25&deg;C</p>
+                            <p id="todayMinTempC" class="temperature-info">Min: 28&deg;C</p>
+                            <p id="todayMaxTempC"class="temperature-info">Max: 28&deg;C</p>
+						</div>
+					</div>
+				</div>
+				<div class="ui card">
+					<div class="content">
+						<div class="header">Condition</div>
+						<div class="description">
+							<p id="currentCondition">Sunny</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="four wide column">
+				<div class="ui card">
+					<div class="content">
+						<div class="header">Wind direction</div>
+						<div class="description">
+							<p id="currentWIndDir">NW</p>
+						</div>
+					</div>
+				</div>
+				<div class="ui card">
+					<div class="content">
+						<div class="header">Wind speed</div>
+						<div class="description">
+							<p id="currentWIndSpeed">10 kph</p>
+						</div>
+					</div>
+				</div>
+			</div>
+            <div class="four wide column">
+                <div class="ui card">
+                    <div class="content">
+                        <div class="header">Chance of rain</div>
+                        <div class="description">
+                            <p id="todayChanceOfRain">0 %</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui card">
+                    <div class="content">
+                        <div class="header">Chance of snow</div>
+                        <div class="description">
+                            <p id="todayChanceOfSnow">0 %</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="four wide column">
+				<div class="ui card" style="height: 100%">
+					<div class="content">
+						<div class="header">Location</div>
+						<div id="locationDescription" class="description">
+							<p>Displayed: </p>
+                            <p>Country: </p>
+                            <p>Region: </p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ui divider"></div>
+	</div>
+
+    <!-- Tomorrow's weather -->
+	<div class="ui container">
+        <div style="display: flex; align-items: center">
+            <h2 id="currentTitle" style="margin-right: 15px">Tomorrow's weather</h2>
+            <img id="tomorrowIcon" style="margin-bottom: 10px; display:none">
+        </div>
+		<div class="ui stackable grid">
+			<div class="six wide column">
+				<div class="ui card">
+					<div class="content">
+						<div class="header">Temperature</div>
+						<div class="description">
+							<p id="tomorrowMinTempC" class="temperature-info">Min: 28&deg;C</p>
+                            <p id="tomorrowMaxTempC" class="temperature-info">Max: 28&deg;C</p>
+						</div>
+					</div>
+				</div>
+				<div class="ui card">
+					<div class="content">
+						<div class="header">Condition</div>
+						<div class="description">
+							<p id="tommorowCondition">Partly cloudy</p>
+						</div>
+                    </div>
+                </div>
+            </div>
+            <div class="six wide column">
+                <div class="ui card">
+                    <div class="content">
+                        <div class="header">Chance of rain</div>
+                        <div class="description">
+                            <p id="tomorrowChanceOfRain">0 %</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui card">
+                    <div class="content">
+                        <div class="header">Chance of snow</div>
+                        <div class="description">
+                            <p id="tomorrowChanceOfSnow">0 %</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui divider"></div>
+        
+    <!-- Chart -->
+    <div class="ui container">
+        <div style="display: auto;"><canvas id="current-chart"></canvas></div>
+    </div>
+    <div class="ui divider"></div>
+
+    <!-- Footer -->
+    <footer class="ui inverted vertical footer segment">
+        <div class="ui center aligned container">
+            <div class="ui stackable inverted divided grid">
+                <div class="eight wide column">
+                    <h4 class="ui inverted header">About</h4>
+                    <div class="ui inverted link list">
+                        <a href="#" class="item">Contact Us</a>
+                        <a href="#" class="item">Privacy Policy</a>
+                        <a href="#" class="item">Terms of Use</a>
+                    </div>
+                </div>
+                <div class="eight wide column">
+                    <h4 class="ui inverted header">Services</h4>
+                    <div class="ui inverted link list">
+                        <a href="#" class="item">Mobile Development</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ui inverted section divider"></div>
+            <div class="ui horizontal inverted small divided link list">
+                <a class="item" href="#">Contact Us</a>
+                <a class="item" href="#">Terms and Conditions</a>
+                <a class="item" href="#">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+<script src="../node_modules/chart.js/dist/chart.umd.js"></script>
+<script type="module" src="index.js"></script>
+</body>
+</html>
